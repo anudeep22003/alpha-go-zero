@@ -51,3 +51,12 @@ class State:
     def __post_init__(self):
         if self.board_deltas is None:
             self.board_deltas = []
+    
+    def __repr__(self) -> str:
+        return f"""board: {self.board}, 
+                \n to_play: {self.to_play}, 
+                \t player_color: {self.player_color}, 
+                \t recent_moves: {self.recent_moves},
+                \t liberty_tracker: {self.lib_tracker}
+                \n board_delta: {self.board_deltas},
+                """

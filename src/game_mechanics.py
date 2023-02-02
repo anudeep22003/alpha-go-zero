@@ -141,6 +141,7 @@ class GoEnv:
             print(
                 f"Resetting Game.\nYou are playing with the {self.color_str} tiles.\nBlack plays first\n\n"
             )
+            print(self.state)
 
         if self.state.to_play != self.player_color:
             self._step(
@@ -163,6 +164,8 @@ class GoEnv:
         if self.verbose:
             name = "player" if self.state.to_play == self.player_color else "opponent"
             print(f"{name} {self.move_to_string(move)}")
+            print('--- state before stepping ----')
+            print(self.state)
 
         assert not self.done, "Game is done! Please reset() the env before calling step() again"
         assert is_move_legal(
@@ -171,6 +174,10 @@ class GoEnv:
 
         self.state = transition_function(self.state, move)
 
+        if self.verbose:
+            print('--- state after stepping ----')
+            print(self.state)
+            
         if self.render:
             self._render_game()
 
@@ -181,6 +188,10 @@ class GoEnv:
 
         if not self.done:
             self._step(self.opponent_choose_move(state=self.state))
+
+        if self.verbose:
+            print('--------- full step -----------')
+            print(self.state)
 
         if self.verbose and self.done:
             self.nice_prints()  # Probably not needed
